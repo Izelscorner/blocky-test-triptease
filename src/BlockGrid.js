@@ -47,7 +47,7 @@ class BlockGrid {
         this.reRender();
     }
 
-    // As long as colour matches recursively scan in 4 directions.
+    // As long as colour matches recursively continue scaning in 4 directions.
     scanMatchingBoxes(x, y, colour) {
         // base condition
         if (this.grid[x][y].colour == 'gray' || this.grid[x][y].colour !== colour) {
