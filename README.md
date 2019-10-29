@@ -2,7 +2,7 @@
 
 ## Solution
 
-My approach recursively searches for neighbouring boxes, updates this.grid array and re-renders the grid. It also moves tracked boxes to top and rearranges the order of columns. Recursive search keeps track of already passed paths for performance optimization (memoization).
+My approach recursively searches for neighbouring boxes, updates this.grid array and re-renders the grid. It also moves tracked boxes to top and rearranges the order of columns. 
 
 One improvement I can see to my solution is, to avoid re-rendering of whole grid on each click direct dom traversal and manipulation could be used,  but for the sake of exercise I kept it clean and tested for up (100 X 100 - 2d array) both rendering and color match scan works ok as I expected.
 

@@ -55,8 +55,7 @@ class BlockGrid {
     scanMatchingBoxes(x, y, colour) {
         this.callCount++; // For testing
         // base condition
-        // this first check is causing a natural memoization effect. Recursive calls will not go through already passed blocks.
-        if (this.grid[x][y].colour == 'gray' || this.grid[x][y].colour !== colour) {
+        if (this.grid[x][y].colour !== colour) {
             return;
         }
 
