@@ -40,10 +40,15 @@ class BlockGrid {
 
     blockClicked(e, block) {
         console.log(e, block);
+        //Reset removed object.
         this.removed = {};
+
         this.scanMatchingBoxes(block.x, block.y, block.colour);
+
         console.log('removed list after click:', this.removed);
-        this.moveRemovedBoxesTop();
+
+        this.moveRemovedBoxesTop(); /* Commenting this line will make it easier to see what blocks are dissaperaing on click */
+
         this.reRender();
     }
 
