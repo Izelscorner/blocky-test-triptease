@@ -71,24 +71,20 @@ class BlockGrid {
         }
 
         // scan next right if valid.
-        const right = x + 1;
-        if (this.grid[right]) {
-            this.scanMatchingBoxes(right, y, colour);
+        if (this.grid[x + 1]) {
+            this.scanMatchingBoxes(x + 1, y, colour);
         }
-        // scan next left if valid.
-        const left = x - 1;
-        if (this.grid[left]) {
-            this.scanMatchingBoxes(left, y, colour);
+        // scan next left if valid
+        if (this.grid[x - 1]) {
+            this.scanMatchingBoxes(x - 1, y, colour);
         }
         // scan next top if valid.
-        const top = y + 1;
-        if (this.grid[x][top]) {
-            this.scanMatchingBoxes(x, top, colour);
+        if (this.grid[x][y + 1]) {
+            this.scanMatchingBoxes(x, y + 1, colour);
         }
         // scan next bottom if valid.
-        const bottom = y - 1;
-        if (this.grid[x][bottom]) {
-            this.scanMatchingBoxes(x, bottom, colour);
+        if (this.grid[x][y - 1]) {
+            this.scanMatchingBoxes(x, y - 1, colour);
         }
     }
 
