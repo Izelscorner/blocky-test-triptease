@@ -91,7 +91,7 @@ class BlockGrid {
             // Sort the removed colums descending order to keep previous array elements in order.
             this.removed[x].sort((a, b) => b - a);
 
-            // Carry removed (gray) gray element to top of the array , previous elements will shift by one.
+            // Carry removed (gray) element to top of the array , previous elements will shift by one.
             this.removed[x].forEach((y) => {
                 const temp = this.grid[x][y];
                 // Remove removed item.
