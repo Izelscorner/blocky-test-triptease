@@ -55,6 +55,7 @@ class BlockGrid {
     // As long as colour matches recursively continue scaning in 4 directions.
     scanMatchingBoxes(x, y, colour) {
         // base condition
+        // this first check is causing a natural memoization effect. Recursive calls will not go through already passed blocks.
         if (this.grid[x][y].colour == 'gray' || this.grid[x][y].colour !== colour) {
             return;
         }
