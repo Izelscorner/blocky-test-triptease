@@ -4,8 +4,7 @@ class BlockGrid {
     constructor(width = 10, height = 10) {
         this.width = width;
         this.height = height;
-        this.grid = [];
-
+        this.grid = []
         for (let x = 0; x < this.width; x++) {
             const col = [];
             for (let y = 0; y < this.height; y++) {
@@ -42,9 +41,9 @@ class BlockGrid {
         console.log(e, block);
         //Reset removed object.
         this.removed = {};
-
+        this.callCount = 0;
         this.scanMatchingBoxes(block.x, block.y, block.colour);
-
+        console.log('Recursive call count for testing:', this.callCount++);
         console.log('removed list after click:', this.removed);
 
         this.moveRemovedBoxesTop(); /* Commenting this line will make it easier to see what blocks are dissaperaing on click */
@@ -54,6 +53,7 @@ class BlockGrid {
 
     // As long as colour matches recursively continue scaning in 4 directions.
     scanMatchingBoxes(x, y, colour) {
+        this.callCount++; // For testing
         // base condition
         // this first check is causing a natural memoization effect. Recursive calls will not go through already passed blocks.
         if (this.grid[x][y].colour == 'gray' || this.grid[x][y].colour !== colour) {
