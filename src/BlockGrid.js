@@ -43,7 +43,7 @@ class BlockGrid {
         this.removed = {};
         this.callCount = 0;
         this.scanMatchingBoxes(block.x, block.y, block.colour);
-        console.log('Recursive call count for testing:', this.callCount++);
+        console.log('Recursive call count for testing:', this.callCount);
         console.log('removed list after click:', this.removed);
 
         this.moveRemovedBoxesTop(); /* Commenting this line will make it easier to see what blocks are dissaperaing on click */
