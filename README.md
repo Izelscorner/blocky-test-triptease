@@ -17,19 +17,8 @@ yarn start
 
 Use `yarn test` to run the unit tests on the terminal. `yarn test --watch` will only run test files relevant to changes since your last commit, and rerun them every time you save.
 
-## Task
+## Solution
 
-Clicking on a block should remove (or hide) itself and all blocks of the same colour that are connected to the target element, then allow the blocks above the removed to "fall down". The "gravity" is similar to [Tetris], but every block is its own 1x1 entity. Unlike Tetris, it's clicking on a block that triggers the removal and fall of blocks.
+My approach recursively searches for neighbouring boxes, updates this.grid array and re-renders. It also moves tracked boxes to top and rearranges the order ofcolumn. Recursive search keeps track of already passed paths for performance optimization (memoization).
 
-For example, given:
-
-![Initial state](./initial.jpg)
-
-After clicking one of the bottom right blue boxes, it should look like this:
-
-![state 2](./expectedResult.jpg)
-
-[node]: https://nodejs.org/en/ "Node is a JavaScript runtime built on Chrome's V8 JavaScript engine"
-[nvm]: https://github.com/creationix/nvm 'Because nobody wants to upgrade and downgrade Node per project'
-[yarn]: https://yarnpkg.com/en/docs/install 'Never go full Facebook though'
-[tetris]: https://en.wikipedia.org/wiki/Tetris "You've played Tetris, right?"
+The Problem with this solution is, it re-renders the whole grid for every new array this might have been achieved also with direct dom traversal and manipulation. but for the sake of exercise I kept it clean and for max 10 X 10 - 2d array this re-rendering shouldn't be a problem.
