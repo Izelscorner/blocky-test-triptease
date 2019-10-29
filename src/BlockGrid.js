@@ -40,71 +40,78 @@ class BlockGrid {
 
     blockClicked(e, block) {
         console.log(e, block);
-        this.removed = [];
-        this.scanConnectedElement(block.x, block.y, block.colour);
-
-        this.reOrderArray();
+        this.removed = {};
+        this.scanMatchingBoxes(block.x, block.y, block.colour);
+        console.log('removed list after click:', this.removed);
+        this.moveRemovedBoxesTop();
         this.reRender();
     }
 
-    reOrderArray() {
-        while (this.removed.length) {
-            const current = this.removed.pop();
-            const temp = this.grid[current.x][current.y];
-            this.grid[current.x].splice(current.y, 1);
-            this.grid[current.x].push(temp);
-            let index = 0;
-            this.grid[current.x].forEach(box => {
-                box.y = index;
-                box.removed = false;
-                index++;
-            })
+    // As long as colour matches recursively scan in 4 directions.
+    scanMatchingBoxes(x, y, colour) {
+        // base condition
+        if (this.grid[x][y].colour == 'gray' || this.grid[x][y].colour !== colour) {
+            return;
+        }
+
+        // set colour to gray
+        this.grid[x][y].colour = 'gray';
+
+        // track removed boxes in hash table with x key
+        if (this.removed[x]) {
+            this.removed[x].push(y);
+        } else {
+            this.removed[x] = [y];
+        }
+
+        // scan next right if valid.
+        const right = x + 1;
+        if (this.grid[right] && this.grid[right][y] && this.grid[right][y].colour === colour) {
+            this.scanMatchingBoxes(right, y, colour);
+        }
+        // scan next left if valid.
+        const left = x - 1;
+        if (this.grid[left] && this.grid[left][y] && this.grid[left][y].colour === colour) {
+            this.scanMatchingBoxes(left, y, colour);
+        }
+        // scan next top if valid.
+        const top = y + 1;
+        if (this.grid[x] && this.grid[x][top] && this.grid[x][top].colour === colour) {
+            this.scanMatchingBoxes(x, top, colour);
+        }
+        // scan next bottom if valid.
+        const bottom = y - 1;
+        if (this.grid[x] && this.grid[x][bottom] && this.grid[x][bottom].colour === colour) {
+            this.scanMatchingBoxes(x, bottom, colour);
         }
     }
+
+    moveRemovedBoxesTop() {
+        for (let x in this.removed) {
+            // Sort the removed colums descending order to keep previous array elements in order.
+            this.removed[x].sort((a, b) => b - a);
+
+            // Carry removed (gray) gray element to top of the array , previous elements will shift by one.
+            this.removed[x].forEach((y) => {
+                const temp = this.grid[x][y];
+                // Remove removed item.
+                this.grid[x].splice(y, 1);
+                // Push to top of the array. this will be displayed as gray box on top.
+                this.grid[x].push(temp);
+            });
+
+            // Fix y property order for the whole column. This is required for on click event.
+            for (let y = 0; y < this.grid[x].length; y++) {
+                this.grid[x][y].y = y;
+            }
+        }
+    }
+
     reRender() {
         document.getElementById('gridEl').innerHTML = '';
         this.render();
     }
 
-    scanConnectedElement(x, y, colour) {
-        // base conditions;
-
-        if (!this.grid[x][y] || this.grid[x][y].removed) {
-            return;
-        }
-
-        if (this.grid[x][y].colour === colour) {
-            this.grid[x][y].removed = true;
-            this.grid[x][y].colour = 'gray';
-            console.log('removed', x, y);
-            this.removed.push({ x, y });
-        } else {
-            return;
-        }
-        // base conditions;
-
-
-        // scan next right
-        const right = x + 1;
-        if (this.grid[right] && this.grid[right][y] && this.grid[right][y].colour === colour) {
-            this.scanConnectedElement(right, y, colour);
-        }
-        // scan next  left
-        const left = x - 1;
-        if (this.grid[left] && this.grid[left][y] && this.grid[left][y].colour === colour) {
-            this.scanConnectedElement(left, y, colour);
-        }
-        // scan next  top
-        const top = y + 1;
-        if (this.grid[x] && this.grid[x][top] && this.grid[x][top].colour === colour) {
-            this.scanConnectedElement(x, top, colour);
-        }
-        // scan next  bottom
-        const bottom = y - 1;
-        if (this.grid[x] && this.grid[x][bottom] && this.grid[x][bottom].colour === colour) {
-            this.scanConnectedElement(x, bottom, colour);
-        }
-    }
 }
 
 export default BlockGrid;
