@@ -21,4 +21,4 @@ Use `yarn test` to run the unit tests on the terminal. `yarn test --watch` will 
 
 My approach recursively searches for neighbouring boxes, updates this.grid array and re-renders the grid. It also moves tracked boxes to top and rearranges the order of columns. Recursive search keeps track of already passed paths for performance optimization (memoization).
 
-The Problem with this solution is, it re-renders the whole grid for every new array this might have been achieved also with direct dom traversal and manipulation  but for the sake of exercise I kept it clean and tested for up (100 X 100 - 2d array) both rendering and color match scan works ok.
+One improvement I can see to my solution is, to avoid re-rendering the whole grid on each click direct dom traversal and manipulation can be used,  but for the sake of exercise I kept it clean and tested for up (100 X 100 - 2d array) both rendering and color match scan works ok as I expected.
